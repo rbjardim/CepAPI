@@ -127,3 +127,4 @@ C:\Projetos\CepAPI\CepAPI\CepAPI\obj\Debug\net8.0\refint\CepAPI.dll
 C:\Projetos\CepAPI\CepAPI\CepAPI\obj\Debug\net8.0\CepAPI.pdb
 C:\Projetos\CepAPI\CepAPI\CepAPI\obj\Debug\net8.0\CepAPI.genruntimeconfig.cache
 C:\Projetos\CepAPI\CepAPI\CepAPI\obj\Debug\net8.0\ref\CepAPI.dll
+C:\Projetos\CepAPI\CepAPI\CepAPI\obj\Debug\net8.0\CepAPI.sourcelink.json

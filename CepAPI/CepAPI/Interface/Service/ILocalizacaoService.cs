@@ -6,7 +6,7 @@ namespace CepAPI.Interface.Service
     {
         Task<int> UpdateLocalizacao(Localizacao local);
         Task<bool> DeleteLocalAsync(int Id);
-        Task<Localizacao> CreateLocalizacao(Localizacao localizacao);
+        Task<bool> CreateLocalizacao(Localizacao localizacao);
         Task<List<Localizacao>> ListLocal();
     }
 }

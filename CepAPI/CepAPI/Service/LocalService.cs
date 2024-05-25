@@ -15,24 +15,33 @@ namespace CepAPI.Service
             _localizacaoRepository = localizacaoRepository;
             _userManager = userManager;
         }
-        public Task<Localizacao> CreateLocalizacao(Localizacao localizacao)
+        public async Task<bool> CreateLocalizacao(Localizacao localizacao)
         {
-            throw new NotImplementedException();
+            var local = new Localizacao();
+
+            var result = await _localizacaoRepository.CreateLocalizacao(localizacao);
+            return true;
         }
 
-        public Task<bool> DeleteLocalAsync(int Id)
+        public async Task<bool> DeleteLocalAsync(int Idlocal)
         {
-            throw new NotImplementedException();
+
+            await _localizacaoRepository.DeleteLocalAsync(Idlocal);
+            return true;
         }
 
-        public Task<List<Localizacao>> ListLocal()
+        public async Task<List<Localizacao>> ListLocal()
         {
-            throw new NotImplementedException();
+            var local = await _localizacaoRepository.ListLocal();
+
+            return local;
         }
 
-        public Task<int> UpdateLocalizacao(Localizacao local)
+        public async Task<int> UpdateLocalizacao(Localizacao localizacao)
         {
-            throw new NotImplementedException();
+            var local = new Localizacao();
+            
+            return await _localizacaoRepository.UpdateLocalizacao(localizacao);
         }
     }
 }
