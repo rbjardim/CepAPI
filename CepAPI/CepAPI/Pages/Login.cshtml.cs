@@ -30,7 +30,7 @@ namespace CepAPI.Pages
             {
                 if (Model.Email == "admin@aec.com.br" && Model.Password == "Ab!123")
                 {
-                    return RedirectToPage("Admin");
+                    return RedirectToPage("Error");
                 }
 
                 var user = await userManager.FindByEmailAsync(Model.Email);
