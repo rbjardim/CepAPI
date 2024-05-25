@@ -1,4 +1,10 @@
+using CepAPI.Interface.Repository;
+using CepAPI.Interface.Service;
+using CepAPI.Model;
 using CepAPI.MySqlContext;
+using CepAPI.Repository;
+using CepAPI.Service;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -6,8 +12,20 @@ string mySqlConnection = builder.Configuration.GetConnectionString("DefaultConne
 
 builder.Services.AddDbContextPool<Context>(options =>
     options.UseMySql(mySqlConnection, ServerVersion.AutoDetect(mySqlConnection)));
-// Add services to the container.
+
+builder.Services.AddIdentity<AplicationUser, IdentityRole>()
+    .AddEntityFrameworkStores<Context>()
+    .AddUserManager<UserManager<AplicationUser>>();
 builder.Services.AddRazorPages();
+
+builder.Services.ConfigureApplicationCookie(config =>
+{
+    config.LoginPath = "/Login";
+});
+builder.Services.AddScoped<ILocalizacaoRepository, LocalizacaoRepository>();
+builder.Services.AddScoped<ILocalizacaoService, LocalService>();
+// Add services to the container.
+//builder.Services.AddRazorPages();
 
 var app = builder.Build();
 

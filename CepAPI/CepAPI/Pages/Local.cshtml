@@ -1,0 +1,133 @@
+﻿@page
+@model CepAPI.Pages.LocalModel
+@{
+    ViewData["Title"] = "Gerenciar Localizações";
+}
+
+<h2>Gerenciar Localizações</h2>
+
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["Message"]
+    </div>
+}
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["Error"]
+    </div>
+}
+
+<div>
+    <h4>Criar Nova Localização</h4>
+    <form method="post" asp-page-handler="Post">
+        <div class="form-group">
+            <label asp-for="Localizacao.Cep"></label>
+            <input asp-for="Localizacao.Cep" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label asp-for="Localizacao.Bairro"></label>
+            <input asp-for="Localizacao.Bairro" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label asp-for="Localizacao.Cidade"></label>
+            <input asp-for="Localizacao.Cidade" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label asp-for="Localizacao.Complemento"></label>
+            <input asp-for="Localizacao.Complemento" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label asp-for="Localizacao.UF"></label>
+            <input asp-for="Localizacao.UF" class="form-control" />
+        </div>
+        <button type="submit" class="btn btn-primary">Salvar</button>
+    </form>
+</div>
+
+<hr />
+
+<div>
+    <h4>Localizações Existentes</h4>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>CEP</th>
+                <th>Bairro</th>
+                <th>Cidade</th>
+                <th>Complemento</th>
+                <th>UF</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var localizacao in Model.Localizacoes)
+            {
+                <tr>
+                    <td>@localizacao.Id</td>
+                    <td>@localizacao.Cep</td>
+                    <td>@localizacao.Bairro</td>
+                    <td>@localizacao.Cidade</td>
+                    <td>@localizacao.Complemento</td>
+                    <td>@localizacao.UF</td>
+                    <td>
+                        <form method="post" asp-page-handler="Delete" asp-route-id="@localizacao.Id" style="display:inline;">
+                            <button type="submit" class="btn btn-danger">Excluir</button>
+                        </form>
+                        <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#editModal-@localizacao.Id">Editar</button>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="editModal-@localizacao.Id" tabindex="-1" role="dialog" aria-labelledby="editModalLabel-@localizacao.Id" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="editModalLabel-@localizacao.Id">Editar Localização</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form method="post" asp-page-handler="Update" asp-route-id="@localizacao.Id">
+                                            <div class="form-group">
+                                                <label asp-for="Localizacao.Cep"></label>
+                                                <input asp-for="Localizacao.Cep" class="form-control" value="@localizacao.Cep" />
+                                            </div>
+                                            <div class="form-group">
+                                                <label asp-for="Localizacao.Bairro"></label>
+                                                <input asp-for="Localizacao.Bairro" class="form-control" value="@localizacao.Bairro" />
+                                            </div>
+                                            <div class="form-group">
+                                                <label asp-for="Localizacao.Cidade"></label>
+                                                <input asp-for="Localizacao.Cidade" class="form-control" value="@localizacao.Cidade" />
+                                            </div>
+                                            <div class="form-group">
+                                                <label asp-for="Localizacao.Complemento"></label>
+                                                <input asp-for="Localizacao.Complemento" class="form-control" value="@localizacao.Complemento" />
+                                            </div>
+                                            <div class="form-group">
+                                                <label asp-for="Localizacao.UF"></label>
+                                                <input asp-for="Localizacao.UF" class="form-control" value="@localizacao.UF" />
+                                            </div>
+                                            <button type="submit" class="btn btn-primary">Salvar alterações</button>
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" crossorigin="anonymous"></script>
+}
