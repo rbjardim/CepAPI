@@ -9,7 +9,7 @@ namespace CepAPI.MySqlContext
     {
         public Context(DbContextOptions<Context> options) : base(options)
         { }
-            public DbSet<Localizacao> localizacao { get; set; }
+            public DbSet<Localizacao> Localizacao { get; set; }
         }
     }
 
