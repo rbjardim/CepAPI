@@ -11,7 +11,6 @@ using System.Threading.Tasks;
 
 namespace CepAPI.Pages
 {
-    [Authorize]
     public class LocalModel : PageModel
     {
         private readonly ILocalizacaoService _localizacaoService;
