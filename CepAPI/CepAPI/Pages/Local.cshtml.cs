@@ -47,7 +47,7 @@ namespace CepAPI.Pages
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
-                return RedirectToPage("/Login");
+                return RedirectToPage("/Local");
             }
 
             // Localizacao.UserId = user.Id;
@@ -62,7 +62,7 @@ namespace CepAPI.Pages
                 return Page();
             }
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("/Local");
         }
 
         public async Task<IActionResult> OnPostUpdateAsync(int id)
@@ -87,7 +87,7 @@ namespace CepAPI.Pages
                 return Page();
             }
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("/Local");
         }
 
         public async Task<IActionResult> OnPostDeleteAsync(int id)
@@ -107,7 +107,7 @@ namespace CepAPI.Pages
                 return Page();
             }
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("/Local");
         }
     }
 }
