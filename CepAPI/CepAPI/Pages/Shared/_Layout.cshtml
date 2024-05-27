@@ -2,13 +2,12 @@
 @using CepAPI.Model;
 @inject SignInManager<AplicationUser> SignInManager
 
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - CepAPI</title>
+    <title>@ViewData["Title"] CepAPI</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
@@ -45,6 +44,9 @@
                         <ul class="navbar-nav d-flex justify-content-end flex-grow-1">
                             <li class="nav-item">
                                 <a asp-page="/Login" class="btn btn-primary">Login</a>
+                            </li>
+                            <li class="nav-item">
+                                <a asp-page="/Register" class="btn btn-primary ml-2">Registrar</a>
                             </li>
                         </ul>
                     }

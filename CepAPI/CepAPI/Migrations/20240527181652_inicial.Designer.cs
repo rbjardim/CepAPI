@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CepAPI.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20240525194837_inicial")]
+    [Migration("20240527181652_inicial")]
     partial class inicial
     {
         /// <inheritdoc />
@@ -116,6 +116,13 @@ namespace CepAPI.Migrations
                     b.Property<string>("Complemento")
                         .IsRequired()
                         .HasColumnType("longtext");
+
+                    b.Property<string>("Logradouro")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<int>("Numero")
+                        .HasColumnType("int");
 
                     b.Property<string>("UF")
                         .IsRequired()

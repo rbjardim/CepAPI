@@ -3,6 +3,7 @@ using CepAPI.ViewModel;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Threading.Tasks;
 
 namespace CepAPI.Pages
 {
@@ -30,16 +31,15 @@ namespace CepAPI.Pages
             {
                 if (Model.Email == "admin@aec.com.br" && Model.Password == "Ab!123")
                 {
-                    return RedirectToPage("Register");
+                    return RedirectToPage("Local");
                 }
 
                 var user = await userManager.FindByEmailAsync(Model.Email);
 
-                
-                
-                    var identityResult = await signInManager.PasswordSignInAsync(Model.Email, Model.Password, Model.RelembreMe, false);
-
-                    if (identityResult.Succeeded)
+                if (user != null)
+                {
+                    var result = await signInManager.PasswordSignInAsync(user, Model.Password, Model.RelembreMe, lockoutOnFailure: false);
+                    if (result.Succeeded)
                     {
                         if (returnUrl == null || returnUrl == "/")
                         {
@@ -50,10 +50,10 @@ namespace CepAPI.Pages
                             return RedirectToPage(returnUrl);
                         }
                     }
-
-                    ModelState.AddModelError("", "Nome do usu�rio ou a senha est� incorreta!");
                 }
 
+                ModelState.AddModelError("", "Nome de usuário ou senha incorretos!");
+            }
 
             return Page();
         }

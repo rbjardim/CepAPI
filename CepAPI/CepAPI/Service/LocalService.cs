@@ -30,6 +30,11 @@ namespace CepAPI.Service
             return true;
         }
 
+        public async Task<Localizacao> GetLocalizacaoById(int id)
+        {
+            return await _localizacaoRepository.GetLocalizacaoById(id);
+        }
+
         public async Task<List<Localizacao>> ListLocal()
         {
             var local = await _localizacaoRepository.ListLocal();
@@ -40,7 +45,7 @@ namespace CepAPI.Service
         public async Task<int> UpdateLocalizacao(Localizacao localizacao)
         {
             var local = new Localizacao();
-            
+
             return await _localizacaoRepository.UpdateLocalizacao(localizacao);
         }
     }

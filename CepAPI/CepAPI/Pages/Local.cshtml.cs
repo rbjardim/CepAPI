@@ -6,7 +6,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace CepAPI.Pages
@@ -108,6 +110,25 @@ namespace CepAPI.Pages
             }
 
             return RedirectToPage("/Local");
+        }
+
+        public async Task<IActionResult> OnPostExportAsync(int id)
+        {
+            var localizacao = await _localizacaoService.GetLocalizacaoById(id);
+            if (localizacao == null)
+            {
+                TempData["Error"] = "Localização não encontrada.";
+                return RedirectToPage("/Local");
+            }
+
+            // Gerar o conteúdo do CSV
+            var csvContent = new StringBuilder();
+            csvContent.AppendLine("ID,CEP,Bairro,Cidade,Complemento,UF");
+            csvContent.AppendLine($"{localizacao.Id},{localizacao.Cep},{localizacao.Bairro},{localizacao.Cidade},{localizacao.Complemento},{localizacao.UF}");
+
+            // Configurar a resposta HTTP para retornar um arquivo CSV
+            byte[] buffer = Encoding.UTF8.GetBytes(csvContent.ToString());
+            return File(buffer, "text/csv", "localizacao.csv");
         }
     }
 }

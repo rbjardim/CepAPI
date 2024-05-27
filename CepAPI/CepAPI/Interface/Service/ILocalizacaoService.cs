@@ -1,4 +1,5 @@
-﻿using CepAPI.Model;
+﻿using System.Threading.Tasks;
+using CepAPI.Model;
 
 namespace CepAPI.Interface.Service
 {
@@ -8,5 +9,6 @@ namespace CepAPI.Interface.Service
         Task<bool> DeleteLocalAsync(int Id);
         Task<bool> CreateLocalizacao(Localizacao localizacao);
         Task<List<Localizacao>> ListLocal();
+        Task<Localizacao> GetLocalizacaoById(int id);
     }
 }
