@@ -1,0 +1,104 @@
+CREATE DATABASE CepAPI CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+
+USE CepAPI;
+
+-- Tabela AspNetRoles
+CREATE TABLE AspNetRoles (
+    Id VARCHAR(255) NOT NULL,
+    Name VARCHAR(256) DEFAULT NULL,
+    NormalizedName VARCHAR(256) DEFAULT NULL,
+    ConcurrencyStamp LONGTEXT DEFAULT NULL,
+    PRIMARY KEY (Id)
+) CHARACTER SET utf8mb4;
+
+-- Tabela AspNetUsers
+CREATE TABLE AspNetUsers (
+    Id VARCHAR(255) NOT NULL,
+    Nome LONGTEXT NOT NULL,
+    UserName VARCHAR(256) DEFAULT NULL,
+    NormalizedUserName VARCHAR(256) DEFAULT NULL,
+    Email VARCHAR(256) DEFAULT NULL,
+    NormalizedEmail VARCHAR(256) DEFAULT NULL,
+    EmailConfirmed TINYINT(1) NOT NULL,
+    PasswordHash LONGTEXT DEFAULT NULL,
+    SecurityStamp LONGTEXT DEFAULT NULL,
+    ConcurrencyStamp LONGTEXT DEFAULT NULL,
+    PhoneNumber LONGTEXT DEFAULT NULL,
+    PhoneNumberConfirmed TINYINT(1) NOT NULL,
+    TwoFactorEnabled TINYINT(1) NOT NULL,
+    LockoutEnd DATETIME(6) DEFAULT NULL,
+    LockoutEnabled TINYINT(1) NOT NULL,
+    AccessFailedCount INT NOT NULL,
+    PRIMARY KEY (Id)
+) CHARACTER SET utf8mb4;
+
+-- Tabela Localizacao
+CREATE TABLE Localizacao (
+    Id INT NOT NULL AUTO_INCREMENT,
+    Cep LONGTEXT NOT NULL,
+    Bairro LONGTEXT NOT NULL,
+    Cidade LONGTEXT NOT NULL,
+    Complemento LONGTEXT NOT NULL,
+    UF LONGTEXT NOT NULL,
+    Numero INT NOT NULL,
+    Logradouro LONGTEXT NOT NULL,
+    PRIMARY KEY (Id)
+) CHARACTER SET utf8mb4;
+
+-- Tabela AspNetRoleClaims
+CREATE TABLE AspNetRoleClaims (
+    Id INT NOT NULL AUTO_INCREMENT,
+    RoleId VARCHAR(255) NOT NULL,
+    ClaimType LONGTEXT DEFAULT NULL,
+    ClaimValue LONGTEXT DEFAULT NULL,
+    PRIMARY KEY (Id),
+    FOREIGN KEY (RoleId) REFERENCES AspNetRoles(Id) ON DELETE CASCADE
+) CHARACTER SET utf8mb4;
+
+-- Tabela AspNetUserClaims
+CREATE TABLE AspNetUserClaims (
+    Id INT NOT NULL AUTO_INCREMENT,
+    UserId VARCHAR(255) NOT NULL,
+    ClaimType LONGTEXT DEFAULT NULL,
+    ClaimValue LONGTEXT DEFAULT NULL,
+    PRIMARY KEY (Id),
+    FOREIGN KEY (UserId) REFERENCES AspNetUsers(Id) ON DELETE CASCADE
+) CHARACTER SET utf8mb4;
+
+-- Tabela AspNetUserLogins
+CREATE TABLE AspNetUserLogins (
+    LoginProvider VARCHAR(255) NOT NULL,
+    ProviderKey VARCHAR(255) NOT NULL,
+    ProviderDisplayName LONGTEXT DEFAULT NULL,
+    UserId VARCHAR(255) NOT NULL,
+    PRIMARY KEY (LoginProvider, ProviderKey),
+    FOREIGN KEY (UserId) REFERENCES AspNetUsers(Id) ON DELETE CASCADE
+) CHARACTER SET utf8mb4;
+
+-- Tabela AspNetUserRoles
+CREATE TABLE AspNetUserRoles (
+    UserId VARCHAR(255) NOT NULL,
+    RoleId VARCHAR(255) NOT NULL,
+    PRIMARY KEY (UserId, RoleId),
+    FOREIGN KEY (UserId) REFERENCES AspNetUsers(Id) ON DELETE CASCADE,
+    FOREIGN KEY (RoleId) REFERENCES AspNetRoles(Id) ON DELETE CASCADE
+) CHARACTER SET utf8mb4;
+
+-- Tabela AspNetUserTokens
+CREATE TABLE AspNetUserTokens (
+    UserId VARCHAR(255) NOT NULL,
+    LoginProvider VARCHAR(255) NOT NULL,
+    Name VARCHAR(255) NOT NULL,
+    Value LONGTEXT DEFAULT NULL,
+    PRIMARY KEY (UserId, LoginProvider, Name),
+    FOREIGN KEY (UserId) REFERENCES AspNetUsers(Id) ON DELETE CASCADE
+) CHARACTER SET utf8mb4;
+
+-- Índices
+CREATE UNIQUE INDEX RoleNameIndex ON AspNetRoles (NormalizedName);
+CREATE UNIQUE INDEX UserNameIndex ON AspNetUsers (NormalizedUserName);
+CREATE INDEX IX_AspNetRoleClaims_RoleId ON AspNetRoleClaims (RoleId);
+CREATE INDEX IX_AspNetUserClaims_UserId ON AspNetUserClaims (UserId);
+CREATE INDEX IX_AspNetUserLogins_UserId ON AspNetUserLogins (UserId);
+CREATE INDEX IX_AspNetUserRoles_RoleId ON AspNetUserRoles (RoleId);
+CREATE INDEX EmailIndex ON AspNetUsers (NormalizedEmail);
