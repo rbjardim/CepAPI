@@ -1,7 +1,8 @@
 • CepAPI
 
 Sobre o Prejeto:
-• Aplicação Web desenvolvida em C#, construida para o gerenciamento de endereços, com opções de busca por API VIACEP, criação, exportação e memorização!
+• Aplicação Web desenvolvida em C#, construida para gerenciar um CRUD de
+endereços, com opções de busca por API VIACEP, criação, exportação e memorização!
 
 
 Layout WEB
