@@ -24,23 +24,23 @@
     <form method="post" asp-page-handler="Post">
         <div class="form-group">
             <label asp-for="Localizacao.Cep"></label>
-            <input asp-for="Localizacao.Cep" class="form-control" />
+            <input asp-for="Localizacao.Cep" id="Localizacao_Cep" class="form-control" onblur="buscarEnderecoPorCEP()" />
         </div>
         <div class="form-group">
             <label asp-for="Localizacao.Bairro"></label>
-            <input asp-for="Localizacao.Bairro" class="form-control" />
+            <input asp-for="Localizacao.Bairro" id="Localizacao_Bairro" class="form-control" />
         </div>
         <div class="form-group">
             <label asp-for="Localizacao.Cidade"></label>
-            <input asp-for="Localizacao.Cidade" class="form-control" />
+            <input asp-for="Localizacao.Cidade" id="Localizacao_Cidade" class="form-control" />
         </div>
         <div class="form-group">
             <label asp-for="Localizacao.Complemento"></label>
-            <input asp-for="Localizacao.Complemento" class="form-control" />
+            <input asp-for="Localizacao.Complemento" id="Localizacao_Complemento" class="form-control" />
         </div>
         <div class="form-group">
             <label asp-for="Localizacao.UF"></label>
-            <input asp-for="Localizacao.UF" class="form-control" />
+            <input asp-for="Localizacao.UF" id="Localizacao_UF" class="form-control" />
         </div>
 
         <div class="form-group">
@@ -50,10 +50,10 @@
 
         <div class="form-group">
             <label asp-for="Localizacao.Logradouro"></label>
-            <input asp-for="Localizacao.Logradouro" class="form-control" />
+            <input asp-for="Localizacao.Logradouro" id="Localizacao_Logradouro" class="form-control" />
         </div>
         <button type="submit" class="btn btn-primary">Salvar</button>
-        <button type="submit" class="btn btn-secundary">Cancelar</button>
+        <button type="button" class="btn btn-secondary" id="btnBuscar">Buscar</button>
     </form>
 </div>
 
@@ -89,7 +89,6 @@
                         </form>
                         <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#editModal-@localizacao.Id">Editar</button>
 
-                        <!-- Botão Exportar -->
                         <form method="post" asp-page-handler="Export" asp-route-id="@localizacao.Id" style="display:inline;">
                             <button type="submit" class="btn btn-success">Exportar</button>
                         </form>
@@ -101,7 +100,25 @@
 </div>
 
 @section Scripts {
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" crossorigin="anonymous"></script>
+    <script>
+        function buscarEnderecoPorCEP() {
+            var cep = document.getElementById('Localizacao_Cep').value.replace(/\D/g, '');
+            if (cep.length === 8) {
+                
+                fetch(`https://viacep.com.br/ws/${cep}/json/`)
+                    .then(response => response.json())
+                    .then(data => preencherCamposEndereco(data))
+                    .catch(error => console.error('Erro ao buscar endereço:', error));
+            }
+        }
+
+        function preencherCamposEndereco(data) {
+
+            document.getElementById('Localizacao_Bairro').value = data.bairro;
+            document.getElementById('Localizacao_Cidade').value = data.localidade;
+            document.getElementById('Localizacao_Complemento').value = data.complemento;
+            document.getElementById('Localizacao_UF').value = data.uf;
+            document.getElementById('Localizacao_Logradouro').value = data.logradouro;
+        }
+    </script>
 }

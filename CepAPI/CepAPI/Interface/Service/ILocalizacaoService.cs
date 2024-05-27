@@ -1,14 +1,16 @@
-﻿using System.Threading.Tasks;
-using CepAPI.Model;
+﻿using CepAPI.Model;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace CepAPI.Interface.Service
 {
     public interface ILocalizacaoService
     {
-        Task<int> UpdateLocalizacao(Localizacao local);
-        Task<bool> DeleteLocalAsync(int Id);
         Task<bool> CreateLocalizacao(Localizacao localizacao);
-        Task<List<Localizacao>> ListLocal();
+        Task<bool> DeleteLocalAsync(int Idlocal);
         Task<Localizacao> GetLocalizacaoById(int id);
+        Task<List<Localizacao>> ListLocal();
+        Task<int> UpdateLocalizacao(Localizacao localizacao);
+        Task<Endereco> BuscarEnderecoPorCEP(string cep);
     }
 }

@@ -2,6 +2,10 @@
 using CepAPI.Interface.Service;
 using CepAPI.Model;
 using Microsoft.AspNetCore.Identity;
+using System.Collections.Generic;
+using System.Net.Http;
+using System.Text.Json;
+using System.Threading.Tasks;
 
 namespace CepAPI.Service
 {
@@ -15,6 +19,27 @@ namespace CepAPI.Service
             _localizacaoRepository = localizacaoRepository;
             _userManager = userManager;
         }
+
+        // Método para buscar dados de endereço com base no CEP usando a API ViaCEP
+        public async Task<Endereco> BuscarEnderecoPorCEP(string cep)
+        {
+            using (var httpClient = new HttpClient())
+            {
+                var response = await httpClient.GetAsync($"https://viacep.com.br/ws/{cep}/json/");
+                if (response.IsSuccessStatusCode)
+                {
+                    var content = await response.Content.ReadAsStringAsync();
+                    var endereco = JsonSerializer.Deserialize<Endereco>(content);
+                    return endereco;
+                }
+                else
+                {
+                    // Tratar o caso de falha na solicitação para a API ViaCEP
+                    return null;
+                }
+            }
+        }
+
         public async Task<bool> CreateLocalizacao(Localizacao localizacao)
         {
             var local = new Localizacao();
