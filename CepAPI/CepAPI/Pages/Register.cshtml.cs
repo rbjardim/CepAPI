@@ -75,7 +75,7 @@ namespace CepAPI.Pages
                     await _dbContext.SaveChangesAsync();
 
                     await signInManager.SignInAsync(user, false);
-                    return RedirectToPage("Register");
+                    return RedirectToPage("Login");
                 }
 
                 foreach (var error in result.Errors)
